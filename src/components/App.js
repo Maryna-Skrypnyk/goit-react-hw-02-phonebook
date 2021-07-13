@@ -7,9 +7,7 @@ import ContactList from '../components/ContactList';
 
 import shortid from 'shortid';
 
-import styles from './App.module.scss';
-
-// import './App.scss';
+import './App.module.scss';
 
 class App extends Component {
   state = {
