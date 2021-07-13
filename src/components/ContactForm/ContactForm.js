@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import shortid from 'shortid';
 
+import styles from './ContactForm.module.scss';
+
 const INITIAL_STATE = {
   name: '',
   number: '',
@@ -41,9 +43,9 @@ class ContactForm extends Component {
     const { name, number } = this.state;
 
     return (
-      <form onSubmit={this.handleSubmit}>
-        <label htmlFor={this.nameInputId}>
-          Name
+      <form onSubmit={this.handleSubmit} className={styles.Form}>
+        <label htmlFor={this.nameInputId} className={styles.Label}>
+          <span className={styles.LabelText}>Name</span>
           <input
             id={this.nameInputId}
             type="text"
@@ -54,11 +56,12 @@ class ContactForm extends Component {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
             required
+            className={styles.Input}
           />
         </label>
 
-        <label htmlFor={this.numberInputId}>
-          Number
+        <label htmlFor={this.numberInputId} className={styles.Label}>
+          <span className={styles.LabelText}>Number</span>
           <input
             id={this.numberInputId}
             type="tel"
@@ -69,10 +72,13 @@ class ContactForm extends Component {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
             required
+            className={styles.Input}
           />
         </label>
 
-        <button type="submit">Add contact</button>
+        <button type="submit" className={styles.Button}>
+          Add contact
+        </button>
       </form>
     );
   }

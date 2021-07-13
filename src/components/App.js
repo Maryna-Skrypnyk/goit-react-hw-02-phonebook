@@ -7,6 +7,8 @@ import ContactList from '../components/ContactList';
 
 import shortid from 'shortid';
 
+import styles from './App.module.scss';
+
 // import './App.scss';
 
 class App extends Component {
@@ -21,19 +23,46 @@ class App extends Component {
   };
 
   addContact = ({ name, number }) => {
+    const { contacts } = this.state;
+
     const contact = {
       id: shortid.generate(),
       name,
       number,
     };
 
+    if (!contacts.map(contact => contact.name).includes(contact.name)) {
+      this.setState(({ contacts }) => ({
+        contacts: [contact, ...contacts],
+      }));
+    } else {
+      alert(`${contact.name} is already in contacts`);
+    }
+  };
+
+  changeFilter = e => {
+    this.setState({ filter: e.target.value });
+  };
+
+  getVisibleContacts = () => {
+    const { contacts, filter } = this.state;
+
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter),
+    );
+  };
+
+  deleteContact = contactId => {
     this.setState(prevState => ({
-      contacts: [contact, ...prevState.contacts],
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
     }));
   };
 
   render() {
-    const { contacts } = this.state;
+    const { filter } = this.state;
+
+    const filteredContacts = this.getVisibleContacts();
 
     return (
       <Layout>
@@ -41,8 +70,11 @@ class App extends Component {
         <ContactForm onSubmit={this.addContact} />
 
         <h2>Contacts</h2>
-        <Filter />
-        <ContactList contacts={contacts} />
+        <Filter value={filter} onChange={this.changeFilter} />
+        <ContactList
+          contacts={filteredContacts}
+          onDeleteContact={this.deleteContact}
+        />
       </Layout>
     );
   }

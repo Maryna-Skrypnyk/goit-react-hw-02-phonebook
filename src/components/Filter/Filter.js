@@ -1,34 +1,24 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Filter extends Component {
-  state = {
-    name: '',
-  };
+import styles from './Filter.module.scss';
 
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({ [name]: value });
-  };
-
-  render() {
-    const { name } = this.state;
-
-    return (
-      <label>
-        Find contacts by name
-        <input
-          type="text"
-          name="name"
-          value={name}
-          onChange={this.handleChange}
-          placeholder="Enter name"
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
-          required
-        />
-      </label>
-    );
-  }
-}
+const Filter = ({ value, onChange }) => {
+  return (
+    <label className={styles.Label}>
+      <span className={styles.LabelText}>Find contacts by name</span>
+      <input
+        type="text"
+        name="name"
+        value={value}
+        onChange={onChange}
+        placeholder="Enter name"
+        pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+        title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
+        required
+        className={styles.Input}
+      />
+    </label>
+  );
+};
 
 export default Filter;
