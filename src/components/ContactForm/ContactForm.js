@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import shortid from 'shortid';
+
 const INITIAL_STATE = {
   name: '',
   number: '',
@@ -8,24 +10,24 @@ const INITIAL_STATE = {
 class ContactForm extends Component {
   state = { ...INITIAL_STATE };
 
-  //   addContact = e => {
-  //     this.setState({ name: '', number: '' });
-  //   };
+  nameInputId = shortid.generate();
+
+  numberInputId = shortid.generate();
 
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({ [name]: value });
   };
 
+  //   handleInputChange = e => {
+  //     const { name, value } = e.target;
+  //     this.setState({ [name]: value });
+  //   };
+
   handleSubmit = e => {
     e.preventDefault();
 
-    const { name, number } = this.state;
-
-    console.log(`
-      Name: ${name}
-      Number: ${number}
-    `);
+    // const { name, number } = this.state;
 
     this.props.onSubmit({ ...this.state });
     this.reset();
@@ -40,9 +42,10 @@ class ContactForm extends Component {
 
     return (
       <form onSubmit={this.handleSubmit}>
-        <label>
+        <label htmlFor={this.nameInputId}>
           Name
           <input
+            id={this.nameInputId}
             type="text"
             name="name"
             value={name}
@@ -54,9 +57,10 @@ class ContactForm extends Component {
           />
         </label>
 
-        <label>
+        <label htmlFor={this.numberInputId}>
           Number
           <input
+            id={this.numberInputId}
             type="tel"
             name="number"
             value={number}

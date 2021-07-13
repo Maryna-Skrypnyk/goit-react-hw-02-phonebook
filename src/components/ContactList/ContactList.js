@@ -2,12 +2,22 @@ import React from 'react';
 
 import PropTypes from 'prop-types';
 
-const ContactList = ({ contacts }) => {
-  return <ul>{contacts.map(ContactItem)}</ul>;
+const ContactItem = ({ name, number }) => {
+  return (
+    <li>
+      {name}: {number}
+    </li>
+  );
 };
 
-const ContactItem = ({ id, name }) => {
-  return <li key={id}>{name}</li>;
+const ContactList = ({ contacts }) => {
+  return (
+    <ul>
+      {contacts.map(({ id, name, number }) => (
+        <ContactItem key={id} name={name} number={number} />
+      ))}
+    </ul>
+  );
 };
 
 ContactList.propTypes = {
@@ -15,6 +25,7 @@ ContactList.propTypes = {
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
     }),
   ).isRequired,
 };

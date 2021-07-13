@@ -5,6 +5,8 @@ import ContactForm from '../components/ContactForm';
 import Filter from '../components/Filter';
 import ContactList from '../components/ContactList';
 
+import shortid from 'shortid';
+
 // import './App.scss';
 
 class App extends Component {
@@ -18,13 +20,25 @@ class App extends Component {
     filter: '',
   };
 
+  addContact = ({ name, number }) => {
+    const contact = {
+      id: shortid.generate(),
+      name,
+      number,
+    };
+
+    this.setState(prevState => ({
+      contacts: [contact, ...prevState.contacts],
+    }));
+  };
+
   render() {
     const { contacts } = this.state;
 
     return (
       <Layout>
         <h1>Phonebook</h1>
-        <ContactForm />
+        <ContactForm onSubmit={this.addContact} />
 
         <h2>Contacts</h2>
         <Filter />
