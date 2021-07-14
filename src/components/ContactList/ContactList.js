@@ -19,18 +19,21 @@ const ContactItem = ({ name, number, onDeleteContact }) => (
   </li>
 );
 
-const ContactList = ({ contacts, onDeleteContact }) => (
-  <ul className={styles.ContactList}>
-    {contacts.map(({ id, name, number }) => (
-      <ContactItem
-        key={id}
-        name={name}
-        number={number}
-        onDeleteContact={() => onDeleteContact(id)}
-      />
-    ))}
-  </ul>
-);
+const ContactList = ({ contacts, onDeleteContact }) => {
+  if (contacts.length === 0) return null;
+  return (
+    <ul className={styles.ContactList}>
+      {contacts.map(({ id, name, number }) => (
+        <ContactItem
+          key={id}
+          name={name}
+          number={number}
+          onDeleteContact={() => onDeleteContact(id)}
+        />
+      ))}
+    </ul>
+  );
+};
 
 ContactList.propTypes = {
   contacts: PropTypes.arrayOf(

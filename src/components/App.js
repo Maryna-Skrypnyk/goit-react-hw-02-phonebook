@@ -29,13 +29,34 @@ class App extends Component {
       number,
     };
 
-    if (!contacts.map(contact => contact.name).includes(contact.name)) {
-      this.setState(({ contacts }) => ({
-        contacts: [contact, ...contacts],
-      }));
-    } else {
-      alert(`${contact.name} is already in contacts`);
+    if (contacts.find(contact => contact.name === name)) {
+      alert(`${name} is already in contacts`);
+      return;
     }
+
+    if (contacts.find(contact => contact.number === number)) {
+      alert(`Number ${number} is already in contacts`);
+      return;
+    }
+
+    if ((!name || name.trim() === '') && (!number || number.trim() === '')) {
+      alert('Fill in the fields "Name" and "Number"');
+      return;
+    }
+
+    if (!name || name.trim() === '') {
+      alert('Field "Name" is empty');
+      return;
+    }
+
+    if (!number || number.trim() === '') {
+      alert('Field "Number" is empty');
+      return;
+    }
+
+    this.setState(({ contacts }) => ({
+      contacts: [contact, ...contacts],
+    }));
   };
 
   changeFilter = e => {
@@ -51,16 +72,35 @@ class App extends Component {
     );
   };
 
+  getVisibleContactsSortByName = () => {
+    const visibleContacts = this.getVisibleContacts();
+
+    const visibleContactsSortByName = visibleContacts.sort((a, b) => {
+      const nameA = a.name.toUpperCase();
+      const nameB = b.name.toUpperCase();
+
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+      return 0;
+    });
+
+    return visibleContactsSortByName;
+  };
+
   deleteContact = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter(contact => contact.id !== contactId),
     }));
   };
 
   render() {
     const { filter } = this.state;
 
-    const filteredContacts = this.getVisibleContacts();
+    const filteredContacts = this.getVisibleContactsSortByName();
 
     return (
       <Layout>
