@@ -1,9 +1,6 @@
 import { Component } from 'react';
-
 import PropTypes from 'prop-types';
-
 import shortid from 'shortid';
-
 import styles from './ContactForm.module.scss';
 
 const INITIAL_STATE = {
@@ -61,7 +58,7 @@ class ContactForm extends Component {
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
             // required
-            maxlength="40"
+            maxLength="40"
             className={styles.Input}
           />
         </label>
@@ -78,7 +75,7 @@ class ContactForm extends Component {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
             // required
-            maxlength="18"
+            maxLength="18"
             className={styles.Input}
           />
         </label>
